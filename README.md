@@ -1,6 +1,6 @@
 # HW3_PCOM
 
-A Project which demanded implementing a Client in C++ connecting to a server using REST API.
+A Project which demanded a Client implementation in C++ which can connect to a server using REST API.
 
 In the source files are the implementations, with the more important parts of the program logic being commented.
 In the header files are the definitions/declarations of structures and functions used in the source files.
@@ -31,8 +31,3 @@ All the methods mentioned above will return a pair containing as the first eleme
 - A connection to the server is made only when it is necessary.
 - There are no checks done on the client related to state, so the user can, for example, send a logout request to the server even if not authenticated or access the library before authenticating. Absolutely all requests are sent to the server, then the received response is displayed, so the management of these errors is done exclusively by the server.
 - If there is already a valid connection to the server, it will be used. Otherwise, the old connection is closed and a new one is created, all these things being processed within the private send and recv methods in the Client class.
-
-An interesting assignment, it's nice to send requests to a server that exists and responds.
-Also, on this occasion, I used less intuitive things from C++.
-
-Catalin-Alexandru Ripanu

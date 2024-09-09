@@ -1,33 +1,29 @@
 # HW3_PCOM
 
-A Project which demanded a Client implementation in C++ which can connect to a server using REST API.
+This project involves the implementation of a Client in C++ that can connect to a server using a REST API.
 
-In the source files are the implementations, with the more important parts of the program logic being commented.
-In the header files are the definitions/declarations of structures and functions used in the source files.
-There are also comments accompanying the definitions/declarations meant to facilitate understanding of their purpose.
+## User Interface
 
-## User Interface:
-Here, the processing of commands given by the user at the command line and the execution of corresponding code for an entered command, if it exists, is done by searching in an unordered_map (another structure could have been used here, the map was chosen for simplicity).
+The processing of commands given by the user at the command line and the execution of corresponding code for an entered command is done by searching in an `unordered_map`. This structure was chosen for its simplicity, but other data structures could have been used as well.
 
-## Command Processing:
-Here, data entered by the user for the requested command is read from the keyboard (example: password, username, book_title, book_id, book_author, etc.), the JSON payload is constructed, the request is sent to the server via a Client object, and then the response from the server is received, interpreted, and displayed. For JSON parsing, the JSON for modern C++ library created by Niels Lohmann was used.
+## Command Processing
 
-This library was used because:
-1. We wanted to use a library, not create one.
-2. The documentation is intuitive.
-3. The library is in a single header file.
+The program reads the data entered by the user for the requested command (e.g., password, username, book_title, book_id, book_author, etc.) from the keyboard, constructs the JSON payload, sends the request to the server via a `Client` object, and then receives, interprets, and displays the response from the server. For JSON parsing, the "JSON for Modern C++" library created by Niels Lohmann was used, as it has intuitive documentation, is in a single header file, and is a well-established library.
 
 ## Client Implementation
-A Client object is used for communication with the server. It exposes the following methods:
-- del: sends an HTTP DELETE request to the server
-- get: sends an HTTP GET request to the server
-- post: sends an HTTP POST request to the server
-- clear: deletes the authorization token and cookie (used for the logout command in the user interface)
 
-All the methods mentioned above will return a pair containing as the first element a nlohmann::json object that is used to display a corresponding message to the user, and as the second element the HTTP status code of the response.
+The `Client` object is used for communication with the server. It exposes the following methods:
 
-## Minor Observations:
-- All HTTP communication is done manually through TCP sockets.
-- A connection to the server is made only when it is necessary.
-- There are no checks done on the client related to state, so the user can, for example, send a logout request to the server even if not authenticated or access the library before authenticating. Absolutely all requests are sent to the server, then the received response is displayed, so the management of these errors is done exclusively by the server.
-- If there is already a valid connection to the server, it will be used. Otherwise, the old connection is closed and a new one is created, all these things being processed within the private send and recv methods in the Client class.
+- `del`: Sends an HTTP DELETE request to the server.
+- `get`: Sends an HTTP GET request to the server.
+- `post`: Sends an HTTP POST request to the server.
+- `clear`: Deletes the authorization token and cookie (used for the logout command in the user interface).
+
+All the methods mentioned above will return a pair containing a `nlohmann::json` object as the first element (used to display a corresponding message to the user) and the HTTP status code of the response as the second element.
+
+## Minor Observations
+
+1. All HTTP communication is done manually through TCP sockets.
+2. A connection to the server is made only when it is necessary.
+3. There are no checks done on the client related to state, so the user can, for example, send a logout request to the server even if not authenticated or access the library before authenticating. Absolutely all requests are sent to the server, and the management of these errors is done exclusively by the server.
+4. If there is already a valid connection to the server, it will be used. Otherwise, the old connection is closed, and a new one is created, all these things being processed within the private `send` and `recv` methods in the `Client` class.

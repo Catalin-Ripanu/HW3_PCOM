@@ -1,4 +1,4 @@
-# HW3_PCOM
+# REST API Client-Server Application
 
 This project involves the implementation of a Client in C++ that can connect to a server using a REST API.
 
